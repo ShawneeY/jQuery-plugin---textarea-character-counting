@@ -55,24 +55,24 @@
 			/* no more remaining character left, need to display prompt text differently */
 			if ( remaining_char_length < 0 ) {
 
-				// if ( options.strict_mode ) {
+				if ( options.strict_mode ) {
+					textarea.val(current_value.substr(0, options.max_char));
+				}
+				else
+				{
+					var exceeded_char_lenth = Math.abs(remaining_char_length);
+
+					/*set the text color to red as a warning*/
+					textarea.next('.char_counting_message').css('color', '#FF0000');
+
+					/* update text message */
+					textarea.next().children('span.current_count').html(current_char_length + ' ' + get_character_text(current_char_length) + ' entered.');
+					textarea.next().children('span.remaining_count').html(exceeded_char_lenth + ' ' + get_character_text(exceeded_char_lenth) + ' over the limit.');
+				}
+			} else { /* character limit not yet reached, just need to update character count */
+				// if (remaining_char_length == 0 && options.strict_mode ) {
 				// 	textarea.val(current_value.substr(0, options.max_char - 1));
 				// }
-
-				var exceeded_char_lenth = Math.abs(remaining_char_length);
-
-				/*set the text color to red as a warning*/
-				textarea.next('.char_counting_message').css('color', '#FF0000');
-
-				/* update text message */
-				textarea.next().children('span.current_count').html(current_char_length + ' ' + get_character_text(current_char_length) + ' entered.');
-				textarea.next().children('span.remaining_count').html(exceeded_char_lenth + ' ' + get_character_text(exceeded_char_lenth) + ' over the limit.');
-
-			} else { /* character limit not yet reached, just need to update character count */
-				/* set the text color back to black */
-				if (remaining_char_length == 0 && options.strict_mode ) {
-					textarea.val(current_value.substr(0, options.max_char - 1));
-				}
 
 				textarea.next('.char_counting_message').css('color', '#000000');
 
